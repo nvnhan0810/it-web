@@ -1,101 +1,105 @@
-import Image from "next/image";
+import PagiantionBar from '@/components/pagination-bar';
+import PostListItem from '@/components/post-list-item';
+import SearchSection from '@/components/search-section';
+import TagBadge from '@/components/tag-badge';
+import '@/envConfig';
+import { PaginationResponse } from '@/types/common.type';
+import { Post, PostItemResponse } from "@/types/post.type";
+import { Tag, TagItemResponse } from "@/types/tag.type";
 
-export default function Home() {
+// Fetch blog posts (Server-Side Fetching)
+async function fetchPosts(query: string, page: number): Promise<PaginationResponse<Post>> {
+  const res = await fetch(`${process.env.API_BASE_URI}/posts?page=${page}&search=${query}`, {
+    next: { revalidate: 10 }, // Cache and revalidate every 10 seconds
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch posts');
+  }
+
+  const resData = await res.json();
+
+  const postsData: PostItemResponse[] = resData.data;
+
+  return {
+    ...resData,
+    lastPage: resData.last_page,
+    data: postsData.map((post): Post => {
+      return {
+        ...post,
+        tags: post.public_tags,
+      };
+    }),
+  };
+
+}
+
+async function fetchTags() {
+  const res = await fetch(`${process.env.API_BASE_URI}/tags`, {
+    next: { revalidate: 10 },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch posts');
+  }
+
+  const resData = await res.json();
+
+  const tagsData = resData.data;
+
+  return tagsData.map((item: TagItemResponse) => {
+    return {
+      ...item,
+      posts_count: item.public_posts_count,
+    };
+  });
+}
+
+export default async function BlogList({
+  searchParams,
+}: {
+  searchParams: { page?: string, q?: string; };
+}) {
+  const { page, q } = await searchParams;
+  const currentPage = parseInt(page || '1', 10);
+  const query = q ?? '';
+  const {data: posts, lastPage} = await fetchPosts(query, currentPage);
+  const tags = await fetchTags();
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="container max-w-4xl mx-auto py-4">
+      <div className="grid grid-cols-4 gap-2">
+        <div className="col-span-3">
+          <h1 className="text-2xl font-bold mb-6">Bài viết</h1>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          <SearchSection initQuery={query} />
+
+          {posts.length > 0 ? (
+            <div className="grid grid-cols-2 gap-4 auto-rows-max">
+              {posts.map((post: Post) => (
+                <PostListItem key={post.id} post={post} />
+              ))}
+            </div>
+          ) : (
+              <p className="text-red-500">Chưa có bài viết nào</p>
+          )}
+
+          {/* Pagination Controls */}
+          <div className="flex items-center justify-center my-3">
+            <PagiantionBar lastPage={lastPage} currentPage={currentPage} query={query} />
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div>
+          <div>
+            <h4 className="text-2xl font-bold px-2 mb-6">Tags</h4>
+            <div className="flex gap-2 px-2">
+              {tags.map((tag: Tag) => (
+                <TagBadge key={tag.id} tag={tag} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
