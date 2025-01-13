@@ -13,4 +13,4 @@ if [ $PM2_EXIST = Yes ]; then
 	pm2 delete nvnahn0810-it-web
 fi
 
-pm2 --name nvnahn0810-it-web start npm -- start -p 3002
+pm2 --name nvnahn0810-it-web start npm -- start -- -p 3002
