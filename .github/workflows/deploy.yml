@@ -82,5 +82,5 @@ jobs:
             rm -rf /var/www/html/it-web/src
             mv /var/www/html/it-web/it-web /var/www/html/it-web/src
             cd /var/www/html/it-web/src
-            /root/.local/share/fnm/fnm use
-            /run/user/0/fnm_multishells/684458_1736761710779/bin/pm2 restart nvnhan0810-it-web
+            cd ~
+            pwd
