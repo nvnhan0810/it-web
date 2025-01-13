@@ -6,10 +6,10 @@ const TagBadge = ({ tag, classes = '', useLink = true }: { tag: Tag, classes?: s
     return useLink ? (
         <Link href={`/tags/${tag.slug}`}>
             <span className={cn(
-                "inline-block border rounded-full px-3 py-1 text-sm hover:bg-gray-300",
+                "inline-block border rounded-full px-3 py-1 text-sm hover:bg-gray-300 text-nowrap",
                 classes
             )}>
-                {tag.name.replace(/([A-Z])/g, ' $1').trim()}
+                {tag.name.replace(/([a-z])([A-Z])/g, '$1 $2').trim()}
             </span>
         </Link>
     ) : (
@@ -17,7 +17,7 @@ const TagBadge = ({ tag, classes = '', useLink = true }: { tag: Tag, classes?: s
             "inline-block border rounded-full px-3 py-1 text-sm text-nowrap",
             classes
         )}>
-            {tag.name.replace(/([A-Z])/g, ' $1').trim()}
+            {tag.name.replace(/([a-z])([A-Z])/g, '$1 $2').trim()}
         </span>
     );
 };
