@@ -116,7 +116,7 @@ export default async function BlogList({
                 <div>
                     <div>
                         <h4 className="text-2xl font-bold px-2 mb-6">Tags</h4>
-                        <div className="flex gap-2 px-2">
+                        <div className="flex gap-2 px-2 flex-wrap">
                             {tags.map((tagItem: Tag) => (
                                 <TagBadge key={tagItem.id} tag={tagItem} useLink={!(tagItem.id == tag.id)} classes={cn({
                                     'bg-gray-300': tagItem.id == tag.id
