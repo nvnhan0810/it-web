@@ -34,7 +34,7 @@ const PostDetailPage = async ({params}: {params: Promise<{ slug: string }> }) =>
             <hr />
 
             {post.tags != undefined && post.tags?.length > 0 ? (
-                <div className="mt-4">
+                <div className="mt-4 flex flex-wrap gap-2">
                     {post.tags.map((item) => (
                         <TagBadge key={item.id} tag={item} />
                     ))}
