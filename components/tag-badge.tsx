@@ -14,7 +14,7 @@ const TagBadge = ({ tag, classes = '', useLink = true }: { tag: Tag, classes?: s
         </Link>
     ) : (
         <span className={cn(
-            "inline-block border rounded-full px-3 py-1 text-sm",
+            "inline-block border rounded-full px-3 py-1 text-sm text-nowrap",
             classes
         )}>
             {tag.name.replace(/([A-Z])/g, ' $1').trim()}
