@@ -24,7 +24,7 @@ const fetchPostDetail = async (slug: string) => {
     };
 };
 
-const PostDetailPage = async ({params}: {params: { slug: string } }) => {
+const PostDetailPage = async ({params}: {params: Promise<{ slug: string }> }) => {
     const { slug } = await params;
     const post: Post = await fetchPostDetail(slug);
 

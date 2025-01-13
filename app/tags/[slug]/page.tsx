@@ -78,8 +78,8 @@ export default async function BlogList({
     searchParams,
     params
 }: {
-    searchParams: { page?: string, q?: string; };
-    params: { slug: string }
+    searchParams: Promise<{ page?: string, q?: string; }>;
+    params: Promise<{ slug: string }>
 }) {
     const { page, q } = await searchParams;
     const { slug } = await params;

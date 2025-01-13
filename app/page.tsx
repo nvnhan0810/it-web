@@ -58,7 +58,7 @@ async function fetchTags() {
 export default async function BlogList({
   searchParams,
 }: {
-  searchParams: { page?: string, q?: string; };
+  searchParams: Promise<{ page?: string, q?: string; }>;
 }) {
   const { page, q } = await searchParams;
   const currentPage = parseInt(page || '1', 10);
