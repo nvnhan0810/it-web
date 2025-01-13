@@ -1,3 +1,4 @@
+import { MarkdownPreview } from '@/components/markdown-preview';
 import TagBadge from '@/components/tag-badge';
 import '@/envConfig';
 import { Post } from "@/types/post.type";
@@ -29,7 +30,7 @@ const PostDetailPage = async ({params}: {params: { slug: string } }) => {
 
     return (
         <div className="container max-w-4xl mx-auto py-4">
-            <h1 className="text-2xl font-bold">{post.title}</h1>
+            <h1 className="text-2xl font-bold mb-4">{post.title}</h1>
             <hr />
 
             {post.tags != undefined && post.tags?.length > 0 ? (
@@ -41,7 +42,7 @@ const PostDetailPage = async ({params}: {params: { slug: string } }) => {
             ) : <></>}
 
             <div className="mt-4">
-                {post.content}
+                <MarkdownPreview doc={post.content} />
             </div>
         </div>
     );
