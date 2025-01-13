@@ -82,13 +82,5 @@ jobs:
             rm -rf /var/www/html/it-web/src
             mv /var/www/html/it-web/it-web /var/www/html/it-web/src
             cd /var/www/html/it-web/src
-            chmod +x deploy.sh
-      - name: Setup PM2
-        if: ${{ success() }}
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: 22
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script_path: /var/www/html/it-web/src/deploy.sh
+            fnm use
+            pm2 restart nvnhan0810-it-web
