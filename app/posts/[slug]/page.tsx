@@ -69,7 +69,7 @@ const PostDetailPage = async ({params}: {params: Promise<{ slug: string }> }) =>
     const post: Post = await fetchPostDetail(slug);
 
     return (
-        <div className="container max-w-4xl mx-auto py-4">
+        <div className="container max-w-4xl mx-auto py-4 px-4">
             <h1 className="text-2xl font-bold mb-4">{post.title}</h1>
             <hr />
 
