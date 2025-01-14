@@ -4,9 +4,9 @@ import TagBadge from "./tag-badge";
 
 const PostListItem = ({ post }: {post: Post}) => {
     return (
-        <Link key={post.id} href={`/posts/${post.slug}`} className="block border rounded-lg p-4 shadow-sm hover:shadow-md transition">
+        <Link key={post.id} href={`/posts/${post.slug}`} className="block border rounded-lg p-4 shadow-sm hover:shadow-md transition overflow-hidden">
             <h2 className="text-lg font-semibold">{post.title}</h2>
-            <p className="text-gray-700">{post.content.substring(0, 100)}...</p>
+            <p className="text-gray-700 break-all">{post.content.substring(0, 100)}...</p>
             {post.tags != undefined && post.tags.length > 0
                 ? (
                     <div className="flex gap-2 overflow-hidden mt-3">

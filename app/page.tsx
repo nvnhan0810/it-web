@@ -67,15 +67,15 @@ export default async function BlogList({
   const tags = await fetchTags();
 
   return (
-    <div className="container max-w-4xl mx-auto py-4">
-      <div className="grid grid-cols-4 gap-2">
-        <div className="col-span-3">
+    <div className="container max-w-4xl mx-auto py-4 px-2">
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-2">
+        <div className="col-span-1 xl:col-span-3">
           <h1 className="text-2xl font-bold mb-6">Bài viết</h1>
 
           <SearchSection initQuery={query} />
 
           {posts.length > 0 ? (
-            <div className="grid grid-cols-2 gap-4 auto-rows-max">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 auto-rows-max">
               {posts.map((post: Post) => (
                 <PostListItem key={post.id} post={post} />
               ))}
