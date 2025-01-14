@@ -2,10 +2,18 @@ import PagiantionBar from '@/components/pagination-bar';
 import PostListItem from '@/components/post-list-item';
 import SearchSection from '@/components/search-section';
 import TagBadge from '@/components/tag-badge';
+import { siteConfig } from '@/config/site';
 import '@/envConfig';
 import { PaginationResponse } from '@/types/common.type';
 import { Post, PostItemResponse } from "@/types/post.type";
 import { Tag, TagItemResponse } from "@/types/tag.type";
+import { Metadata } from 'next';
+
+
+export const metadata: Metadata = {
+  title: siteConfig.name,
+  description: siteConfig.description,
+};
 
 // Fetch blog posts (Server-Side Fetching)
 async function fetchPosts(query: string, page: number): Promise<PaginationResponse<Post>> {

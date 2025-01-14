@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { PaginationResponse } from '@/types/common.type';
 import { Post, PostItemResponse } from "@/types/post.type";
 import { Tag, TagItemResponse } from "@/types/tag.type";
+import { Metadata } from 'next';
 
 // Fetch blog posts (Server-Side Fetching)
 async function fetchPosts(slug: string, query: string, page: number): Promise<PaginationResponse<Post>> {
@@ -72,6 +73,18 @@ async function fetchTags() {
             posts_count: item.public_posts_count,
         };
     });
+}
+
+export async function generateMetadata({
+    params,
+}: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const { slug } = await params;
+
+    const tag = await fetchTag(slug);
+    return {
+        title: tag.name,
+        description: `Bài viết của tag: #${tag}`,
+    };
 }
 
 export default async function BlogList({

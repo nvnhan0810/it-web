@@ -1,9 +1,9 @@
 import { MarkdownPreview } from '@/components/markdown-preview';
 import TagBadge from '@/components/tag-badge';
+import { siteConfig } from '@/config/site';
 import '@/envConfig';
 import { Post } from "@/types/post.type";
-
-
+import { Metadata } from 'next';
 
 const fetchPostDetail = async (slug: string) => {
     const res = await fetch(`${process.env.API_BASE_URI}/posts/${slug}`, {
@@ -23,6 +23,46 @@ const fetchPostDetail = async (slug: string) => {
         tags: post.public_tags,
     };
 };
+
+export async function generateMetadata({
+    params,
+}: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const { slug } = await params
+    const post = await fetchPostDetail(slug);
+
+    if (!post) {
+        return {};
+    }
+
+    const ogSearchParams = new URLSearchParams();
+    ogSearchParams.set("title", post.title);
+
+    return {
+        title: post.title,
+        description: post.title,
+        authors: { name: siteConfig.author },
+        openGraph: {
+            title: post.title,
+            description: post.title,
+            type: "article",
+            url: post.slug,
+            images: [
+                {
+                    url: `/api/og?${ogSearchParams.toString()}`,
+                    width: 1200,
+                    height: 630,
+                    alt: post.title,
+                },
+            ],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: post.title,
+            description: post.title,
+            images: [`/api/og?${ogSearchParams.toString()}`],
+        },
+    };
+}
 
 const PostDetailPage = async ({params}: {params: Promise<{ slug: string }> }) => {
     const { slug } = await params;
