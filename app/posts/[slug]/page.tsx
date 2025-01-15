@@ -1,4 +1,4 @@
-import { MarkdownPreview } from '@/components/markdown-preview';
+import PostContent from '@/components/post-content';
 import TagBadge from '@/components/tag-badge';
 import { siteConfig } from '@/config/site';
 import '@/envConfig';
@@ -82,7 +82,7 @@ const PostDetailPage = async ({params}: {params: Promise<{ slug: string }> }) =>
             ) : <></>}
 
             <div className="mt-4">
-                <MarkdownPreview doc={post.content} />
+                <PostContent doc={post.content} />
             </div>
         </div>
     );
