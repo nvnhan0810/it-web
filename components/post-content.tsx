@@ -1,6 +1,6 @@
 import { MarkdownPreview } from "react-markdown-preview";
 import "react-markdown-preview/dist/highlight.css";
-import "react-markdown-preview/dist/markdown-light.css";
+import "react-markdown-preview/dist/markdown.css";
 
 const PostContent = ({doc}:{doc: string}) => {
     return (

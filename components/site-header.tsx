@@ -4,6 +4,7 @@ import { UserCircle } from "lucide-react";
 import Link from "next/link";
 import { Icons } from "./icons";
 import { MobileNav } from "./mobile-nav";
+import { ModeToggle } from "./mode-toggle";
 import { buttonVariants } from "./ui/button";
 
 const SiteHeader = async () => {
@@ -63,7 +64,7 @@ const SiteHeader = async () => {
                                 <span className="sr-only">GitHub</span>
                             </div>
                         </Link>
-                        {/* <ModeToggle />*/}
+                        <ModeToggle />
                         <MobileNav /> 
                     </nav>
                 </div>
