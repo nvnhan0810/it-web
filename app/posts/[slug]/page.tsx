@@ -82,6 +82,11 @@ const PostDetailPage = async ({params}: {params: Promise<{ slug: string }> }) =>
             ) : <></>}
 
             <div className="mt-4">
+                {post.description && (
+                    <blockquote>
+                        <p>{post.description}</p>
+                    </blockquote>
+                )}
                 <PostContent doc={post.content} />
             </div>
         </div>
