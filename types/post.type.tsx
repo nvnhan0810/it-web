@@ -6,6 +6,7 @@ export type PostItemResponse = Post & {
 
 export type Post = {
     id: number;
+    description?: string;
     slug: string;
     title: string;
     content: string;
