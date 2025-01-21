@@ -70,6 +70,7 @@ jobs:
             mv /var/www/html/it-web/it-web /var/www/html/it-web/src
             cd /var/www/html/it-web/src
             echo "$USER" > user.log
+            echo "$SHELL" > shell.log
             fnm env
             fnm use
             npm i -g pm2
