@@ -66,10 +66,10 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            eval "$(fnm env --use-on-cd --shell bash)"
             rm -rf /var/www/html/it-web/src
             mv /var/www/html/it-web/it-web /var/www/html/it-web/src
             cd /var/www/html/it-web/src
-            source ~/.bashrc
             fnm use
             npm ci 
             npm run build
