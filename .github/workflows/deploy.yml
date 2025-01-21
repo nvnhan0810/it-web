@@ -69,5 +69,8 @@ jobs:
             rm -rf /var/www/html/it-web/src
             mv /var/www/html/it-web/it-web /var/www/html/it-web/src
             cd /var/www/html/it-web/src
-            cd ~
-            echo "$PWD" > /var/www/html/it-web/pwd.log
+            source ~/.bashrc
+            fnm use
+            npm ci 
+            npm run build
+            pm2 restart nvnhan0810-it-web
