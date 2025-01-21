@@ -69,9 +69,5 @@ jobs:
             rm -rf /var/www/html/it-web/src
             mv /var/www/html/it-web/it-web /var/www/html/it-web/src
             cd /var/www/html/it-web/src
-            echo "$USER" > user.log
-            echo "$SHELL" > shell.log
-            fnm env
-            fnm use
-            npm i -g pm2
-            pm2 restart nvnahn0810-it-web
+            cd ~
+            echo "$PWD" > /var/www/html/it-web/pwd.log
