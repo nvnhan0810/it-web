@@ -70,6 +70,7 @@ jobs:
             rm -rf /var/www/html/it-web/src
             mv /var/www/html/it-web/it-web /var/www/html/it-web/src
             cd /var/www/html/it-web/src
+            chown root:root -R /var/www/html/it-web/src
             fnm use
             npm ci 
             npm run build
