@@ -30,8 +30,10 @@ jobs:
         run: |
           cp .env.prod .env
           sed -i "s|{API_BASE_URI}|$API_BASE_URI|g" .env
+          sed -i "s|{GA_ID}|$GA_ID|g" .env
         env:
           API_BASE_URI: ${{ secrets.API_BASE_URI }}
+          GA_ID: ${{ secrets.GA_ID }}
 
       - name: Set up SSH private key
         env:

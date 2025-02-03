@@ -1,6 +1,8 @@
 import { Providers } from "@/components/providers";
 import SiteFooter from "@/components/site-footer";
 import SiteHeader from "@/components/site-header";
+import '@/envConfig';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -29,6 +31,8 @@ export default function RootLayout({
           </div>
         </Providers>
       </body>
+
+      {process.env.NODE_ENV === 'production' && <GoogleAnalytics gaId={process.env.GA_ID ?? ''} />}
     </html>
   );
 }
