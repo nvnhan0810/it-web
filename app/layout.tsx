@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`"min-h-screen bg-background font-sans antialiased`}
+        className={`"min-h-screen bg-background font-sans antialiased scroll-smooth scroll-pt-24`}
       >
         <Providers>
           <div className="relative flex min-h-dvh flex-col bg-background">
